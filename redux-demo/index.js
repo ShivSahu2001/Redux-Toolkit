@@ -97,8 +97,13 @@ const iceCreamReducer = (state = initialIceCreamState, action) => {
                 numOfIceCream : state.numOfIceCream + action.payload
             }
         }
-            default:
-                return state
+        case CAKE_ORDERED:
+            return {
+                ...state,
+                numOfIceCream: state.numOfIceCream - 1,
+            }
+        default:
+             return state
     }
 }
 
@@ -108,12 +113,15 @@ const rootReducer = combineReducers({
 
 })
 
-const store = createStore(rootReducer, applyMiddleware(logger))
+// , applyMiddleware(logger)
+const store = createStore(rootReducer)
 console.log('Initial State: ', store.getState())
 
-const unsubscribe = store.subscribe(() => {})
+const unsubscribe = store.subscribe(() => {
+    console.log('Update state: ', store.getState())
+})
 
-// console.log('Update state: ', store.getState())
+//
 
 // store.dispatch(orderCake())
 // store.dispatch(orderCake())
